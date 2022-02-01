@@ -23,6 +23,62 @@
 
 NEXTPNR_NAMESPACE_BEGIN
 
+void Arch::create_dsp(int x, int y)
+{
+    BelId bel = add_bel(x, y, id_cyclonev_dsp, id_cyclonev_dsp);
+    add_bel_pin(bel, id_accumulate, PORT_IN,
+                get_port(CycloneV::DSP, x, y, -1, CycloneV::ACCUMULATE, -1));
+    for(int i=0; i < 4; i++)
+        add_bel_pin(bel, id(stringf("aclr[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, -1, CycloneV::ACLR, i));
+    for(int i=0; i < 6; i++)
+        add_bel_pin(bel, id(stringf("clkin[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, -1, CycloneV::CLKIN, i));
+    for(int i=0; i < 9; i++) {
+        add_bel_pin(bel, id(stringf("dataina[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 0, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("datainb[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 1, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("datainc[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 2, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("dataind[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 3, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("dataine[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 4, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("datainf[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 5, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("dataing[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 6, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("datainh[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 7, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("dataini[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 8, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("datainj[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 9, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("dataink[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 10, CycloneV::DATAIN, i));
+        add_bel_pin(bel, id(stringf("datainl[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, 11, CycloneV::DATAIN, i));
+    }
+    for(int i=0; i < 3; i++)
+        add_bel_pin(bel, id(stringf("enable[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, -1, CycloneV::ENABLE, i));
+    add_bel_pin(bel, id_loadconst, PORT_IN,
+                get_port(CycloneV::DSP, x, y, -1, CycloneV::LOADCONST, -1));
+    add_bel_pin(bel, id_negate, PORT_IN,
+                get_port(CycloneV::DSP, x, y, -1, CycloneV::NEGATE, -1));
+    for(int i=0; i < 74; i++)
+        add_bel_pin(bel, id(stringf("result[%d]", i)), PORT_OUT,
+                    get_port(CycloneV::DSP, x, y, -1, CycloneV::RESULT, i));
+    add_bel_pin(bel, id_sub, PORT_IN,
+                get_port(CycloneV::DSP, x, y, -1, CycloneV::SUB, -1));
+    for(int i=0; i < 8; i++) {
+        static const int unk[8] = { 30,31, 62, 63, 94, 95, 126, 127 };
+        add_bel_pin(bel, id(stringf("unk_in[%d]", i)), PORT_IN,
+                    get_port(CycloneV::DSP, x, y, -1, CycloneV::UNK_IN, unk[i]));
+    }
+}
+
 void Arch::create_clkbuf(int x, int y)
 {
     for (int z = 0; z < 4; z++) {

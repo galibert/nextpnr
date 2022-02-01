@@ -107,6 +107,9 @@ Arch::Arch(ArchArgs args)
     for (auto mlab_pos : cyclonev->mlab_get_pos())
         create_lab(CycloneV::pos2x(mlab_pos), CycloneV::pos2y(mlab_pos), /*is_mlab=*/true);
 
+    for (auto dsp_pos : cyclonev->dsp_get_pos())
+        create_dsp(CycloneV::pos2x(dsp_pos), CycloneV::pos2y(dsp_pos));
+
     for (auto gpio_pos : cyclonev->gpio_get_pos())
         create_gpio(CycloneV::pos2x(gpio_pos), CycloneV::pos2y(gpio_pos));
 
