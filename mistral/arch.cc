@@ -331,6 +331,7 @@ BelId Arch::add_bel(int x, int y, IdString name, IdString type)
 {
     auto &bels = bels_by_tile.at(pos2idx(x, y));
     BelId id = BelId(CycloneV::xy2pos(x, y), bels.size());
+    printf("BEL %2d %2d %2d \"%s\" \"%s\"\n", 
     all_bels.push_back(id);
     bels.emplace_back();
     auto &bel = bels.back();
